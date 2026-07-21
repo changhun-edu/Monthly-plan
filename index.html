@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>월중계획 & 주간계획 자동화 시스템</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --green:#0f9d58;--green-dk:#0a7a44;--green-lt:#e6f4ea;
+  --blue:#1a73e8;--blue-lt:#e8f0fe;
+  --orange:#e67700;
+  --g50:#f8f9fa;--g100:#f1f3f4;--g200:#e0e0e0;--g500:#9aa0a6;--g700:#5f6368;--g900:#202124;
+  --sh-sm:0 1px 4px rgba(0,0,0,.08);--sh-md:0 4px 20px rgba(0,0,0,.10);--sh-lg:0 8px 40px rgba(0,0,0,.13);
+  --r:14px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;line-height:1.65;min-width:960px;}
+
+/* 모바일 차단 */
+.mb{display:none;position:fixed;inset:0;background:var(--green);z-index:9999;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;color:white;}
+.mb .ico{font-size:60px;margin-bottom:20px;}
+.mb h1{font-size:20px;font-weight:700;margin-bottom:10px;}
+.mb p{font-size:14px;opacity:.9;line-height:1.7;}
+.mb .badge{margin-top:24px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:600;}
+@media(max-width:959px){.mb{display:flex;}}
+
+/* 스크롤 바 */
+.prog{position:fixed;top:0;left:0;height:3px;background:var(--green);z-index:200;transition:width .1s;}
+
+/* 내비 */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--g200);}
+.nav-in{max-width:1080px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:58px;}
+.logo{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;text-decoration:none;color:var(--g900);}
+.logo-dot{width:30px;height:30px;border-radius:8px;background:var(--green);color:white;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--g700);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--green);}
+.nav-cta{background:var(--green);color:white!important;padding:8px 20px;border-radius:8px;font-weight:600!important;transition:background .2s!important;}
+.nav-cta:hover{background:var(--green-dk)!important;}
+
+/* 공통 */
+.wrap{max-width:1080px;margin:0 auto;padding:0 40px;}
+.sec{padding:84px 0;}
+.sec-alt{background:var(--g50);}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:10px;}
+.sec-title{font-size:32px;font-weight:900;line-height:1.25;margin-bottom:14px;}
+.sec-desc{font-size:16px;color:var(--g700);line-height:1.75;max-width:580px;}
+.btn-main{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:white;text-decoration:none;padding:15px 32px;border-radius:10px;font-size:15px;font-weight:700;box-shadow:0 4px 16px rgba(15,157,88,.35);transition:all .2s;}
+.btn-main:hover{background:var(--green-dk);transform:translateY(-2px);box-shadow:0 6px 24px rgba(15,157,88,.4);}
+
+/* 히어로 */
+.hero{padding:80px 0 72px;background:linear-gradient(150deg,#fff 45%,var(--green-lt) 100%);}
+.hero-in{max-width:1080px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-lt);color:var(--green);border:1px solid rgba(15,157,88,.25);border-radius:100px;padding:5px 14px;font-size:12px;font-weight:700;margin-bottom:20px;}
+.hero-title{font-size:42px;font-weight:900;line-height:1.2;margin-bottom:18px;}
+.hero-title em{color:var(--green);font-style:normal;}
+.hero-desc{font-size:16px;color:var(--g700);line-height:1.8;margin-bottom:32px;}
+.hero-sub{font-size:13px;color:var(--g500);margin-top:14px;}
+
+/* 시트 목업 */
+.hcard{background:white;border-radius:16px;box-shadow:var(--sh-lg);overflow:hidden;border:1px solid var(--g200);}
+.cbar{background:var(--g50);border-bottom:1px solid var(--g200);padding:10px 14px;display:flex;align-items:center;gap:7px;}
+.cd{width:10px;height:10px;border-radius:50%;}
+.cbar-t{font-size:11px;color:var(--g700);margin-left:5px;flex:1;font-weight:500;}
+.cmbar{background:#4a86e8;color:white;font-size:11px;font-weight:700;padding:5px 14px;display:flex;align-items:center;gap:6px;}
+.shr{display:grid;grid-template-columns:36px 36px 1fr 1fr 80px;background:#cfe2f3;font-size:10px;font-weight:700;text-align:center;}
+.shr>div{padding:5px 3px;border-right:1px solid #b8d0e8;}
+.sr{display:grid;grid-template-columns:36px 36px 1fr 1fr 80px;font-size:10px;border-bottom:1px solid #f0f0f0;}
+.sr>div{padding:7px 3px;border-right:1px solid #f0f0f0;}
+.sr.wk{background:#ffff00;}
+.sc{text-align:center;font-weight:600;}
+.sx{font-size:9px;color:#444;line-height:1.4;padding:4px 5px!important;}
+.sr2{color:#cc0000;font-weight:600;font-size:9px;padding:4px 3px!important;}
+
+/* 장점 카드 */
+.bg{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;}
+.bc{background:white;border:1px solid var(--g200);border-radius:var(--r);padding:28px 24px;box-shadow:var(--sh-sm);transition:all .25s;position:relative;overflow:hidden;}
+.bc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--green);transform:scaleX(0);transition:transform .3s;transform-origin:left;}
+.bc:hover{box-shadow:var(--sh-md);transform:translateY(-3px);}
+.bc:hover::before{transform:scaleX(1);}
+.bi{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:18px;}
+.bi.g{background:var(--green-lt);}
+.bi.b{background:var(--blue-lt);}
+.bi.o{background:#fff8f0;}
+.bt{font-size:17px;font-weight:700;margin-bottom:10px;}
+.bd{font-size:14px;color:var(--g700);line-height:1.7;}
+.btag{display:inline-block;margin-top:14px;background:var(--green-lt);color:var(--green);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;}
+
+/* STEP */
+.steps{margin-top:60px;}
+.step-row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:56px 0;border-bottom:1px solid var(--g200);}
+.step-row:first-child{padding-top:0;}
+.step-row:last-child{border-bottom:none;padding-bottom:0;}
+.step-row.rev{direction:rtl;}
+.step-row.rev>*{direction:ltr;}
+.snb{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sn{width:40px;height:40px;border-radius:50%;background:var(--green);color:white;font-size:18px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sl{font-size:12px;font-weight:700;color:var(--green);letter-spacing:.1em;text-transform:uppercase;}
+.stitle{font-size:24px;font-weight:800;margin-bottom:12px;line-height:1.3;}
+.sdesc{font-size:15px;color:var(--g700);line-height:1.75;}
+.snote{margin-top:14px;background:#fff8f0;border:1px solid #ffe0b2;border-radius:8px;padding:10px 14px;font-size:13px;color:var(--g700);}
+
+/* 목업들 */
+.mock{background:white;border-radius:12px;box-shadow:var(--sh-md);border:1px solid var(--g200);overflow:hidden;}
+.mbar{background:var(--g50);border-bottom:1px solid var(--g200);padding:8px 12px;display:flex;align-items:center;gap:6px;}
+.mbody{padding:16px 18px;}
+.mi{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;font-size:13px;color:var(--g700);}
+.mi.act{background:var(--blue-lt);color:var(--blue);font-weight:600;}
+.msep{border:none;border-top:1px solid var(--g200);margin:3px 0;}
+
+/* 팝업 목업 */
+.dlg{border:1px solid var(--g200);border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.15);background:white;overflow:hidden;}
+.dlg-t{background:white;border-bottom:1px solid var(--g200);padding:14px 18px;font-size:14px;font-weight:700;}
+.dlg-b{padding:16px 18px;}
+.dlg-f label{font-size:11px;color:var(--g700);font-weight:600;display:block;margin-bottom:4px;}
+.fi{width:100%;border:1.5px solid var(--g200);border-radius:6px;padding:8px 10px;font-size:13px;color:var(--g900);background:white;}
+.fi.on{border-color:var(--blue);background:var(--blue-lt);}
+.dlg-btns{padding:12px 18px;display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--g200);}
+.db{padding:8px 18px;border-radius:6px;font-size:13px;font-weight:600;border:none;cursor:pointer;}
+.db.s{background:var(--g100);color:var(--g700);}
+.db.p{background:var(--blue);color:white;}
+.db.g{background:var(--green);color:white;}
+
+/* 앱스크립트 허용 목업 */
+.am{border-radius:10px;overflow:hidden;box-shadow:var(--sh-lg);background:white;border:1px solid var(--g200);}
+.am-top{padding:18px 20px 14px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:12px;}
+.am-ico{width:36px;height:36px;border-radius:50%;background:#fce8e6;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.am-ttl{font-size:13px;font-weight:700;}
+.am-sub{font-size:11px;color:var(--g500);margin-top:2px;}
+.am-body{padding:14px 20px;font-size:12px;color:var(--g700);line-height:1.6;}
+.am-steps{padding:0 20px 12px;}
+.am-step{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:12px;color:var(--g700);}
+.am-step .num{width:20px;height:20px;border-radius:50%;background:var(--green);color:white;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+/* 설정 목업 */
+.set-tab-row{display:flex;border-bottom:1px solid var(--g200);background:white;}
+.set-tab{padding:9px 16px;font-size:12px;font-weight:500;color:var(--g500);}
+.set-tab.act{color:var(--blue);border-bottom:2.5px solid var(--blue);font-weight:700;}
+.sf{margin-bottom:12px;}
+.sf label{display:block;font-size:11px;font-weight:600;color:var(--g700);margin-bottom:4px;}
+.sf .fi2{width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--g900);background:white;}
+.sf .fi2.ok{border-color:var(--green);background:var(--green-lt);}
+.ssave{width:100%;padding:9px;background:var(--blue);color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:default;margin-top:4px;}
+
+/* CTA */
+.cta-sec{background:linear-gradient(135deg,var(--green) 0%,#0a7a44 100%);padding:72px 0;text-align:center;color:white;}
+.cta-sec h2{font-size:32px;font-weight:900;margin-bottom:12px;}
+.cta-sec p{font-size:16px;opacity:.9;margin-bottom:32px;}
+.btn-wh{display:inline-flex;align-items:center;gap:8px;background:white;color:var(--green);padding:15px 36px;border-radius:10px;font-size:16px;font-weight:800;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,.2);transition:all .2s;}
+.btn-wh:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.25);}
+.cta-note{margin-top:18px;font-size:13px;opacity:.75;}
+
+/* FAQ */
+.fq-list{margin-top:44px;display:flex;flex-direction:column;gap:10px;}
+.fq-item{background:white;border:1px solid var(--g200);border-radius:var(--r);overflow:hidden;}
+.fq-q{padding:17px 22px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;transition:background .15s;}
+.fq-q:hover{background:var(--g50);}
+.fq-q .arr{color:var(--green);font-size:17px;transition:transform .2s;flex-shrink:0;}
+.fq-item.open .fq-q .arr{transform:rotate(180deg);}
+.fq-a{display:none;padding:0 22px 16px;font-size:14px;color:var(--g700);line-height:1.75;border-top:1px solid var(--g100);}
+.fq-a.show{display:block;padding-top:14px;}
+
+/* 푸터 */
+.footer{background:var(--g900);color:rgba(255,255,255,.55);padding:44px 0 32px;}
+.ft-in{max-width:1080px;margin:0 auto;padding:0 40px;display:flex;justify-content:space-between;align-items:flex-start;gap:40px;}
+.ft-brand .name{font-size:15px;font-weight:700;color:white;margin-bottom:6px;}
+.ft-brand p{font-size:13px;line-height:1.6;}
+.ft-links{display:flex;flex-direction:column;gap:7px;}
+.ft-links a{font-size:13px;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s;}
+.ft-links a:hover{color:white;}
+.ft-bot{max-width:1080px;margin:28px auto 0;padding:18px 40px 0;border-top:1px solid rgba(255,255,255,.1);font-size:12px;display:flex;justify-content:space-between;color:rgba(255,255,255,.3);}
+</style>
+</head>
+<body>
+
+<div class="prog" id="prog"></div>
+
+<!-- 모바일 차단 -->
+<div class="mb">
+  <div class="ico">🖥️</div>
+  <h1>PC 전용 프로그램입니다</h1>
+  <p>이 시스템은 Google Sheets 기반의<br>PC 전용 업무 자동화 프로그램입니다.<br><br>PC(Windows/Mac)의 Chrome 브라우저로<br>접속해 주세요.</p>
+  <div class="badge">💻 PC에서 접속하세요</div>
+</div>
+
+<!-- 내비 -->
+<nav class="nav">
+  <div class="nav-in">
+    <a class="logo" href="#"><div class="logo-dot">📅</div>월중계획 &amp; 주간계획</a>
+    <div class="nav-links">
+      <a href="#benefits">주요 기능</a>
+      <a href="#guide">받는 방법</a>
+      <a href="#faq">FAQ</a>
+      <a href="#share" class="nav-cta">📋 문서 받기</a>
+    </div>
+  </div>
+</nav>
+
+<!-- 히어로 -->
+<section class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="hero-badge">📅 Google Sheets 기반 · 무료</div>
+      <h1 class="hero-title">월중계획을 입력하면<br>주간계획이<br><em>자동으로 완성</em>됩니다</h1>
+      <p class="hero-desc">월중계획 양식 자동 생성부터 확인 결재, 주간계획 자동 복사까지.<br>반복되는 학교 서류 업무를 Google Sheets 하나로 해결합니다.</p>
+      <a href="#share" class="btn-main">📋 내 드라이브에 가져가기</a>
+      <p class="hero-sub">* Google 계정이 있으면 무료로 사용 가능합니다</p>
+    </div>
+    <div class="hcard">
+      <div class="cbar">
+        <div class="cd" style="background:#ff5f57"></div>
+        <div class="cd" style="background:#febc2e"></div>
+        <div class="cd" style="background:#28c840"></div>
+        <span class="cbar-t">7~8월_월중계획 · Google Sheets</span>
+      </div>
+      <div class="cmbar">📅 월중계획&amp;주간계획 ▾</div>
+      <div class="shr"><div>일</div><div>요일</div><div>작은학교</div><div>업무</div><div>유치원</div></div>
+      <div class="sr"><div class="sc">25</div><div style="text-align:center">금</div><div class="sx">*여름방학식<br>*1학기 통지표 배부</div><div class="sr2">*방학식(10:00)</div><div></div></div>
+      <div class="sr wk"><div class="sc">26</div><div style="text-align:center;color:#1155cc">토</div><div></div><div></div><div></div></div>
+      <div class="sr wk"><div class="sc">27</div><div style="text-align:center;color:#cc0000">일</div><div></div><div></div><div></div></div>
+      <div class="sr" style="background:#fff2cc;"><div style="grid-column:1/-1;text-align:center;color:#cc0000;font-weight:700;font-size:9px;padding:5px;">☀️ 여름방학 2026-07-25 ~ 2026-08-20</div></div>
+      <div class="sr"><div class="sc" style="font-size:9px;color:#555">8월</div><div></div><div></div><div></div><div></div></div>
+      <div class="sr"><div class="sc">21</div><div style="text-align:center">금</div><div class="sx">*개학식 *2학기 시작</div><div class="sr2">*전교직원 회의</div><div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 장점 -->
+<section class="sec" id="benefits">
+  <div class="wrap">
+    <div class="eyebrow">주요 기능</div>
+    <h2 class="sec-title">세 가지가 달라집니다</h2>
+    <p class="sec-desc">반복 작업을 자동화해서 선생님이 수업에 집중할 수 있도록 만들었습니다.</p>
+    <div class="bg">
+      <div class="bc">
+        <div class="bi g">📋</div>
+        <div class="bt">월중계획 양식 자동 생성</div>
+        <div class="bd">월을 선택하면 달력 양식이 자동으로 만들어집니다. 토·일·공휴일은 노란색, 방학 기간은 자동 표시됩니다. 7~8월, 12~1월은 한 시트에 합산 생성됩니다.</div>
+        <span class="btag">클릭 한 번으로 완성</span>
+      </div>
+      <div class="bc">
+        <div class="bi b">✅</div>
+        <div class="bt">이름 입력 → 날짜 자동 기록</div>
+        <div class="bd">확인자 칸에 이름을 입력하면 확인 일시가 자동으로 기록됩니다. 한 번 확인하면 ✅로 고정되어 다른 사람이 실수로 지울 수 없습니다.</div>
+        <span class="btag">공유 문서에서도 안전하게</span>
+      </div>
+      <div class="bc">
+        <div class="bi o">🔄</div>
+        <div class="bt">월중계획 → 주간계획 자동 복사</div>
+        <div class="bd">주간계획 양식을 생성하면 월중계획에 입력한 내용(작은학교·업무)이 해당 날짜에 자동으로 들어갑니다. 같은 내용을 두 번 입력하지 않아도 됩니다.</div>
+        <span class="btag">이중 입력 완전 제거</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 가이드 -->
+<section class="sec sec-alt" id="guide">
+  <div class="wrap">
+    <div class="eyebrow">설치 가이드</div>
+    <h2 class="sec-title">4단계로 시작하기</h2>
+    <p class="sec-desc">Google 계정만 있으면 5분 안에 사용할 수 있습니다.</p>
+
+    <div class="steps">
+
+      <!-- STEP 1 -->
+      <div class="step-row">
+        <div>
+          <div class="snb"><div class="sn">1</div><span class="sl">STEP 1</span></div>
+          <div class="stitle">공유 링크를 열고<br>사본 저장하기</div>
+          <div class="sdesc">
+            아래 <a href="#share" style="color:var(--green);font-weight:700;">[문서 받기]</a> 버튼을 클릭하면 공유 문서가 열립니다.<br><br>
+            상단 메뉴에서 <strong>[파일]</strong> → <strong>[사본 만들기]</strong>를 클릭하면 내 드라이브에 복사본이 저장됩니다.<br><br>
+            이후 내 복사본에서 독립적으로 작업하면 됩니다.
+          </div>
+          <div class="snote">⚠️ 공유 문서에 직접 입력하지 마세요.<br><strong>반드시 사본을 만든 후</strong> 본인 파일에서 작업하세요.</div>
+        </div>
+        <div class="mock">
+          <div class="mbar">
+            <div class="cd" style="background:#ff5f57"></div>
+            <div class="cd" style="background:#febc2e"></div>
+            <div class="cd" style="background:#28c840"></div>
+            <span style="font-size:11px;color:var(--g700);margin-left:6px;">월중계획_샘플 · Google Sheets</span>
+          </div>
+          <div class="mbody" style="padding:8px 12px;">
+            <div style="font-size:11px;font-weight:700;color:var(--g900);padding:6px 8px;border-bottom:1px solid var(--g200);margin-bottom:4px;">파일</div>
+            <div class="mi">📄 새로 만들기</div>
+            <div class="mi">📂 열기</div>
+            <hr class="msep">
+            <div class="mi">📊 가져오기</div>
+            <div class="mi act">📋 사본 만들기 &nbsp;◀ 클릭!</div>
+            <hr class="msep">
+            <div class="mi">🔗 공유</div>
+            <div class="mi">⬇️ 다운로드</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-row rev">
+        <div>
+          <div class="snb"><div class="sn">2</div><span class="sl">STEP 2</span></div>
+          <div class="stitle">파일 이름 입력 후<br>확인 클릭</div>
+          <div class="sdesc">
+            사본 만들기를 클릭하면 파일 이름을 입력하는 창이 뜹니다.<br><br>
+            원하는 이름(예: 2026 ○○초등학교 학교업무)을 입력하고 <strong>[확인]</strong>을 클릭하면 내 드라이브에 파일이 생성됩니다.<br><br>
+            파일이 새 탭에 열리면 저장 완료입니다.
+          </div>
+        </div>
+        <div class="dlg">
+          <div class="dlg-t">사본 만들기</div>
+          <div class="dlg-b">
+            <div class="dlg-f" style="margin-bottom:14px;">
+              <label>이름</label>
+              <input class="fi on" type="text" value="2026 운남초등학교 학교업무" readonly>
+            </div>
+            <div class="dlg-f">
+              <label>저장 위치</label>
+              <div style="padding:8px 10px;border:1.5px solid var(--g200);border-radius:6px;font-size:12px;color:var(--g700);display:flex;align-items:center;gap:6px;">📁 내 드라이브</div>
+            </div>
+          </div>
+          <div class="dlg-btns">
+            <button class="db s">취소</button>
+            <button class="db p">확인</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-row">
+        <div>
+          <div class="snb"><div class="sn">3</div><span class="sl">STEP 3</span></div>
+          <div class="stitle">Apps Script 실행<br>허용하기 (최초 1회)</div>
+          <div class="sdesc">
+            내 파일에서 상단 메뉴 <strong>[📅 월중계획&amp;주간계획]</strong>을 클릭하면 승인 팝업이 뜹니다.<br><br>
+            아래 순서대로 진행하세요.
+          </div>
+          <div class="snote">⚠️ <strong>"Google이 확인하지 않은 앱"</strong> 경고는 정상입니다.<br>본인 드라이브에만 접근하며 외부로 데이터를 전송하지 않습니다.</div>
+        </div>
+        <div class="am">
+          <div class="am-top">
+            <div class="am-ico">⚠️</div>
+            <div>
+              <div class="am-ttl">승인이 필요합니다</div>
+              <div class="am-sub">이 프로젝트를 실행하려면 권한이 필요합니다</div>
+            </div>
+          </div>
+          <div class="am-body">이 앱은 Google에서 확인하지 않았습니다. 개인이 제작한 스크립트로 본인의 Google Drive에만 접근합니다.</div>
+          <div class="am-steps">
+            <div class="am-step"><div class="num">1</div><span>[권한 검토] 클릭</span></div>
+            <div class="am-step"><div class="num">2</div><span>Google 계정 선택</span></div>
+            <div class="am-step"><div class="num">3</div><span>[고급] 클릭</span></div>
+            <div class="am-step"><div class="num">4</div><span style="color:var(--green);font-weight:600;">[안전하지 않은 페이지로 이동] 클릭</span></div>
+            <div class="am-step"><div class="num">5</div><span style="color:var(--green);font-weight:600;">[허용] 클릭 → 완료!</span></div>
+          </div>
+          <div class="dlg-btns" style="border-top:1px solid var(--g200);">
+            <button class="db s">취소</button>
+            <button class="db g">권한 검토</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-row rev">
+        <div>
+          <div class="snb"><div class="sn">4</div><span class="sl">STEP 4</span></div>
+          <div class="stitle">초기 설정 입력 후<br>바로 시작!</div>
+          <div class="sdesc">
+            메뉴에서 <strong>[⚙️ 초기 설정]</strong>을 클릭해 학교명, 학년도, 공휴일, 방학 일정, 확인자를 입력합니다.<br><br>
+            <strong>[💾 저장]</strong>을 누르면 모든 준비가 완료됩니다.<br><br>
+            이제 <strong>[📋 월중계획 양식 생성]</strong>으로 바로 시작하세요!
+          </div>
+        </div>
+        <div class="mock">
+          <div class="mbar">
+            <div class="cd" style="background:#ff5f57"></div>
+            <div class="cd" style="background:#febc2e"></div>
+            <div class="cd" style="background:#28c840"></div>
+            <span style="font-size:11px;color:var(--g700);margin-left:6px;">⚙️ 초기 설정</span>
+          </div>
+          <div class="set-tab-row">
+            <div class="set-tab act">📋 기본정보</div>
+            <div class="set-tab">📅 달력설정</div>
+            <div class="set-tab">✅ 확인자</div>
+          </div>
+          <div class="mbody" style="padding:14px 16px;">
+            <div class="sf"><label>학교명 *</label><div class="fi2 ok">운남초등학교</div></div>
+            <div class="sf"><label>학년도 *</label><div class="fi2 ok">2026</div></div>
+            <div class="sf"><label>슬로건</label><div class="fi2" style="color:var(--g500);font-size:11px;">비워두면 자동 생성됩니다</div></div>
+            <button class="ssave">💾 저장</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec" id="share">
+  <div class="wrap">
+    <div style="font-size:48px;margin-bottom:16px;">📋</div>
+    <h2>지금 바로 시작하세요</h2>
+    <p>링크를 열어 사본을 저장하면 즉시 사용할 수 있습니다</p>
+    <a href="YOUR_GOOGLE_SHEETS_SHARE_LINK" target="_blank" class="btn-wh">📋 내 드라이브에 가져가기</a>
+    <p class="cta-note">* Google 계정 로그인 후 [파일] → [사본 만들기]로 저장하세요</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="eyebrow">자주 묻는 질문</div>
+    <h2 class="sec-title">FAQ</h2>
+    <div class="fq-list">
+      <div class="fq-item">
+        <div class="fq-q" onclick="faq(this)"><span>무료인가요?</span><span class="arr">▽</span></div>
+        <div class="fq-a">완전 무료입니다. Google 계정만 있으면 Google Sheets와 Apps Script 모두 무료로 사용 가능합니다.</div>
+      </div>
+      <div class="fq-item">
+        <div class="fq-q" onclick="faq(this)"><span>사본 저장 후 원본 문서와 연결이 되나요?</span><span class="arr">▽</span></div>
+        <div class="fq-a">아닙니다. 사본을 만들면 완전히 독립된 파일이 됩니다. 원본 문서와 데이터가 공유되지 않고 내 드라이브에서 독립적으로 관리됩니다.</div>
+      </div>
+      <div class="fq-item">
+        <div class="fq-q" onclick="faq(this)"><span>"Google이 확인하지 않은 앱" 경고가 뜨는데 안전한가요?</span><span class="arr">▽</span></div>
+        <div class="fq-a">안전합니다. 개인이 만든 Apps Script에 항상 표시되는 정상적인 경고입니다. 본인의 Google 드라이브에만 접근하고 외부 서버로 데이터를 전송하지 않습니다.<br>[고급] → [안전하지 않은 페이지로 이동] → [허용] 순서로 진행하시면 됩니다.</div>
+      </div>
+      <div class="fq-item">
+        <div class="fq-q" onclick="faq(this)"><span>여러 선생님이 동시에 입력할 수 있나요?</span><span class="arr">▽</span></div>
+        <div class="fq-a">네. 완성된 월중계획 파일을 편집자 권한으로 공유하면 여러 선생님이 동시에 접속해 내용을 입력할 수 있습니다. Google 계정 로그인 없이 링크만으로도 편집이 가능합니다.</div>
+      </div>
+      <div class="fq-item">
+        <div class="fq-q" onclick="faq(this)"><span>월중계획을 먼저 입력해야 주간계획이 자동으로 채워지나요?</span><span class="arr">▽</span></div>
+        <div class="fq-a">네. 월중계획 시트의 작은학교·업무 칸에 내용을 입력한 후 주간계획 양식을 생성하면 해당 날짜 내용이 자동으로 복사됩니다. 월중계획을 먼저 작성하는 것이 기본 업무 흐름입니다.</div>
+      </div>
+      <div class="fq-item">
+        <div class="fq-q" onclick="faq(this)"><span>공휴일 자동 조회가 안 될 때는 어떻게 하나요?</span><span class="arr">▽</span></div>
+        <div class="fq-a">학교 Google Workspace 계정에서 외부 API 접근이 차단된 경우 자동 조회가 안 될 수 있습니다. 초기 설정의 공휴일 입력란에 직접 입력하세요.<br>입력 형식: 3/1, 5/5, 6/6, 8/15, 10/3, 10/9, 12/25</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 푸터 -->
+<footer class="footer">
+  <div class="ft-in">
+    <div class="ft-brand">
+      <div class="name">📅 학교 업무 자동화 시스템</div>
+      <p>월중계획 &amp; 주간계획<br>Google Sheets 기반 · 무료 · PC 전용</p>
+    </div>
+    <div class="ft-links">
+      <a href="#benefits">주요 기능</a>
+      <a href="#guide">받는 방법</a>
+      <a href="#faq">FAQ</a>
+      <a href="#share">문서 받기</a>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <span>만든이: 2026 최창훈</span>
+    <span>PC 전용 프로그램 (Chrome 브라우저 권장)</span>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var p=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
+  document.getElementById('prog').style.width=Math.min(p,100)+'%';
+});
+function faq(q){
+  var item=q.parentElement;
+  var ans=item.querySelector('.fq-a');
+  var open=item.classList.contains('open');
+  document.querySelectorAll('.fq-item').forEach(function(i){i.classList.remove('open');i.querySelector('.fq-a').classList.remove('show');});
+  if(!open){item.classList.add('open');ans.classList.add('show');}
+}
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var t=document.querySelector(this.getAttribute('href'));
+    if(!t)return;
+    e.preventDefault();
+    window.scrollTo({top:t.offsetTop-70,behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
