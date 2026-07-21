@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>월중계획 & 주간계획 자동화 시스템</title>
+<title>월중계획 자동화 | 학교 업무 자동화 시스템</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -56,6 +56,9 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
 .hero-in{max-width:1080px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-lt);color:var(--green);border:1px solid rgba(15,157,88,.25);border-radius:100px;padding:5px 14px;font-size:12px;font-weight:700;margin-bottom:20px;}
 .hero-title{font-size:42px;font-weight:900;line-height:1.2;margin-bottom:18px;}
+.hero-title .line1{font-size:18px;font-weight:500;color:var(--g500);display:block;margin-bottom:6px;line-height:1.5;}
+.hero-title .line2{font-size:30px;font-weight:700;color:var(--g700);display:block;margin-bottom:2px;}
+.hero-title .line3{font-size:46px;font-weight:900;color:var(--green);display:block;line-height:1.15;}
 .hero-title em{color:var(--green);font-style:normal;}
 .hero-desc{font-size:16px;color:var(--g700);line-height:1.8;margin-bottom:32px;}
 .hero-sub{font-size:13px;color:var(--g500);margin-top:14px;}
@@ -192,7 +195,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
     <a class="logo" href="#"><div class="logo-dot">📅</div>월중계획 &amp; 주간계획</a>
     <div class="nav-links">
       <a href="#benefits">주요 기능</a>
-      <a href="#guide">받는 방법</a>
+      <a href="#guide">시작하기</a>
       <a href="#faq">FAQ</a>
       <a href="#share" class="nav-cta">📋 가져가기</a>
     </div>
@@ -203,9 +206,13 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
 <section class="hero">
   <div class="hero-in">
     <div>
-      <div class="hero-badge">📅 Google Sheets 기반 · 무료</div>
-      <h1 class="hero-title">클릭 한 번으로 월중계획 양식을 만들고,<br>입력만 하면<br>주간계획까지 <em>자동 완성!</em></h1>
-      <p class="hero-desc">월중계획 양식 자동 생성부터 이름 한 번 입력으로 확인 완료,<br>주간계획 자동 복사까지 반복되는 서류 업무를 한 번에 해결합니다.</p>
+      <div class="hero-badge">📅 학교 업무 자동화 · 무료 · PC 전용</div>
+      <h1 class="hero-title">
+  <span class="line1">클릭 한 번으로 월중계획 양식을 만들고,</span>
+  <span class="line2">입력만 하면</span>
+  <span class="line3">주간계획까지 자동 완성!</span>
+</h1>
+      <p class="hero-desc">반복되는 서류 작업을 자동화해서<br>선생님이 수업에 집중할 수 있도록 만들었습니다.</p>
       <a href="#share" class="btn-main">📋 내 드라이브에 가져가기</a>
       <p class="hero-sub">* Google 계정이 있으면 무료로 사용 가능합니다</p>
     </div>
@@ -297,23 +304,40 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
             반드시 사본을 만든 후 본인 파일에서 작업하세요.
           </div>
         </div>
-        <div class="mock">
-          <div class="mbar">
-            <div class="cd" style="background:#ff5f57"></div>
-            <div class="cd" style="background:#febc2e"></div>
-            <div class="cd" style="background:#28c840"></div>
-            <span style="font-size:11px;color:var(--g700);margin-left:6px;">월중계획_샘플 · Google Sheets</span>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <!-- 준비 체크리스트 -->
+          <div class="mock">
+            <div class="mbar">
+              <span style="font-size:11px;font-weight:700;color:var(--g700);">✅ 시작 전 체크리스트</span>
+            </div>
+            <div class="mbody" style="padding:12px 16px;">
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="display:flex;align-items:center;gap:10px;font-size:13px;">
+                  <input type="checkbox" checked style="width:15px;height:15px;accent-color:var(--green);flex-shrink:0;">
+                  <span>PC (Windows 또는 Mac)</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;font-size:13px;">
+                  <input type="checkbox" checked style="width:15px;height:15px;accent-color:var(--green);flex-shrink:0;">
+                  <span>Chrome 브라우저 사용 중</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;font-size:13px;">
+                  <input type="checkbox" checked style="width:15px;height:15px;accent-color:var(--green);flex-shrink:0;">
+                  <span>Chrome에 Google 계정 로그인 완료</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="mbody" style="padding:8px 12px;">
-            <div style="font-size:11px;font-weight:700;color:var(--g900);padding:6px 8px;border-bottom:1px solid var(--g200);margin-bottom:4px;">파일</div>
-            <div class="mi">📄 새로 만들기</div>
-            <div class="mi">📂 열기</div>
-            <hr class="msep">
-            <div class="mi">📊 가져오기</div>
-            <div class="mi act">📋 사본 만들기 &nbsp;◀ 클릭!</div>
-            <hr class="msep">
-            <div class="mi">🔗 공유</div>
-            <div class="mi">⬇️ 다운로드</div>
+          <!-- 가져가기 버튼 -->
+          <a href="https://docs.google.com/spreadsheets/d/1Dyy1KDVjw425l6eFsmR_jiGSIMy-njx-Y10q9GvPe5w/edit?gid=0#gid=0"
+             target="_blank"
+             style="display:flex;align-items:center;justify-content:center;gap:10px;
+                    background:var(--green);color:white;text-decoration:none;
+                    padding:16px 24px;border-radius:12px;font-size:16px;font-weight:700;
+                    box-shadow:0 4px 16px rgba(15,157,88,.35);transition:all .2s;">
+            📋 내 드라이브에 가져가기
+          </a>
+          <div style="text-align:center;font-size:12px;color:var(--g500);">
+            클릭하면 공유 문서가 열립니다 → STEP 2로 이동
           </div>
         </div>
       </div>
@@ -330,8 +354,8 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
             이제부터는 이 <strong>내 파일</strong>에서만 작업하면 됩니다.
           </div>
           <div class="snote">
-            💡 사본을 만들면 시트와 함께 <strong>메뉴와 자동화 기능도 함께</strong> 내 드라이브에 복사됩니다.<br>
-            원본 공유 문서와는 완전히 독립된 내 파일이 됩니다.
+            💡 <strong>사본을 만들어야 메뉴가 생깁니다.</strong> 공유 문서를 그냥 사용하면 메뉴가 없습니다.<br>
+            사본을 만들면 시트와 자동화 기능이 함께 내 드라이브에 복사되어 독립적으로 운영됩니다.
           </div>
         </div>
         <div class="dlg">
@@ -348,7 +372,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
           </div>
           <div class="dlg-btns">
             <button class="db s">취소</button>
-            <button class="db p">확인</button>
+            <button class="db p">확인 ◀ 클릭!</button>
           </div>
         </div>
       </div>
@@ -359,8 +383,8 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
           <div class="snb"><div class="sn">3</div><span class="sl">STEP 3</span></div>
           <div class="stitle">프로그램 실행<br>허용하기 (최초 1회)</div>
           <div class="sdesc">
-            사본 파일에서 <strong>F5(새로고침)</strong>을 누르면 상단에 메뉴가 나타납니다.<br>
-            <strong>[📅 월중계획&amp;주간계획]</strong>을 클릭하면 허용 팝업이 뜹니다.<br><br>
+            사본 파일이 열리면 상단에 <strong>[📅 월중계획&amp;주간계획]</strong> 메뉴를 클릭하세요.<br>
+            메뉴가 안 보이면 <strong>F5(새로고침)</strong>을 누른 후 다시 클릭하세요.<br><br>
             처음 한 번만 아래 허용 절차를 진행하면 됩니다.<br>
             두 번째부터는 바로 사용 가능합니다.
           </div>
@@ -434,10 +458,9 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
       <div class="step-row rev">
         <div>
           <div class="snb"><div class="sn">4</div><span class="sl">STEP 4</span></div>
-          <div class="stitle">초기 설정 입력 후<br>바로 시작!</div>
+          <div class="stitle">초기 설정 후<br>월중계획 생성!</div>
           <div class="sdesc">
-            허용 완료 후 상단에 <strong>[📅 월중계획&amp;주간계획]</strong> 메뉴가 나타납니다.<br><br>
-            <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+            <div style="display:flex;flex-direction:column;gap:10px;">
               <div style="display:flex;gap:10px;align-items:flex-start;">
                 <span style="background:var(--green);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">1</span>
                 <span><strong>[⚙️ 초기 설정]</strong> 클릭<br><span style="color:var(--g700);font-size:13px;">학교명·학년도·공휴일·방학 입력 → [💾 저장]</span></span>
@@ -487,7 +510,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
   <div class="wrap">
     <div style="font-size:48px;margin-bottom:16px;">📋</div>
     <h2>지금 바로 시작하세요</h2>
-    <p>링크를 열어 사본을 저장하면 즉시 사용할 수 있습니다</p>
+    <p>사본을 저장하고 한 번만 허용하면 바로 사용할 수 있습니다</p>
     <a href="https://docs.google.com/spreadsheets/d/1Dyy1KDVjw425l6eFsmR_jiGSIMy-njx-Y10q9GvPe5w/edit?gid=0#gid=0" target="_blank" class="btn-wh">📋 내 드라이브에 가져가기</a>
     <p class="cta-note">* Chrome 브라우저에 Google 계정 로그인 후 [파일] → [사본 만들기]로 저장하세요</p>
   </div>
@@ -514,7 +537,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
       </div>
       <div class="fq-item">
         <div class="fq-q" onclick="faq(this)"><span>허용 후에도 [📅 월중계획&주간계획] 메뉴가 안 보여요.</span><span class="arr">▽</span></div>
-        <div class="fq-a">허용 절차 완료 후 스프레드시트 탭으로 돌아와서 <strong>F5(새로고침)</strong>을 누르면 메뉴가 나타납니다.<br><br>그래도 없다면 상단 메뉴 <strong>[확장 프로그램]</strong> → <strong>[Apps Script]</strong>를 클릭해 편집기 창을 열고, <strong>저장(Ctrl+S)</strong> 후 편집기 창을 닫고 다시 F5를 눌러보세요.</div>
+        <div class="fq-a">허용 절차 완료 후 스프레드시트 탭으로 돌아와서 <strong>F5(새로고침)</strong>을 누르면 메뉴가 나타납니다.<br><br>그래도 없다면 상단 메뉴 <strong>[확장 프로그램]</strong> → <strong>[Apps Script]</strong>(자동화 편집기)를 클릭해 편집기 창을 열고, <strong>저장(Ctrl+S)</strong> 후 편집기 창을 닫고 다시 F5를 눌러보세요.</div>
       </div>
       <div class="fq-item">
         <div class="fq-q" onclick="faq(this)"><span>승인 팝업에서 [확인]을 눌렀는데 아무것도 안 떠요.</span><span class="arr">▽</span></div>
@@ -562,9 +585,9 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
     </div>
     <div class="ft-links">
       <a href="#benefits">주요 기능</a>
-      <a href="#guide">받는 방법</a>
+      <a href="#guide">시작하기</a>
       <a href="#faq">FAQ</a>
-      <a href="#share">문서 받기</a>
+      <a href="https://docs.google.com/spreadsheets/d/1Dyy1KDVjw425l6eFsmR_jiGSIMy-njx-Y10q9GvPe5w/edit?gid=0#gid=0" target="_blank">📋 문서 가져가기</a>
     </div>
   </div>
   <div class="ft-bot">
