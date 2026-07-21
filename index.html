@@ -273,10 +273,16 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
           <div class="stitle">공유 링크를 열고<br>사본 저장하기</div>
           <div class="sdesc">
             아래 <a href="#share" style="color:var(--green);font-weight:700;">[문서 받기]</a> 버튼을 클릭하면 공유 문서가 열립니다.<br><br>
-            상단 메뉴에서 <strong>[파일]</strong> → <strong>[사본 만들기]</strong>를 클릭하면 내 드라이브에 복사본이 저장됩니다.<br><br>
+            상단 메뉴에서 <strong>[파일]</strong> → <strong>[사본 만들기]</strong>를 클릭하면<br>
+            시트와 함께 <strong>스크립트(메뉴)도 함께</strong> 내 드라이브에 복사됩니다.<br><br>
             이후 내 복사본에서 독립적으로 작업하면 됩니다.
           </div>
-          <div class="snote">⚠️ 공유 문서에 직접 입력하지 마세요.<br><strong>반드시 사본을 만든 후</strong> 본인 파일에서 작업하세요.</div>
+          <div class="snote">
+            💡 <strong>편집자 권한으로 공유된 링크</strong>를 통해 사본을 만들어야<br>
+            상단 <strong>[📅 월중계획&amp;주간계획] 메뉴가 함께 복사</strong>됩니다.<br><br>
+            ⚠️ 공유 문서에 직접 입력하지 마세요.<br>
+            반드시 사본을 만든 후 본인 파일에서 작업하세요.
+          </div>
         </div>
         <div class="mock">
           <div class="mbar">
@@ -335,31 +341,71 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
           <div class="snb"><div class="sn">3</div><span class="sl">STEP 3</span></div>
           <div class="stitle">Apps Script 실행<br>허용하기 (최초 1회)</div>
           <div class="sdesc">
-            내 파일에서 상단 메뉴 <strong>[📅 월중계획&amp;주간계획]</strong>을 클릭하면 승인 팝업이 뜹니다.<br><br>
+            내 파일에서 상단 메뉴 <strong>[📅 월중계획&amp;주간계획]</strong>을 클릭하면<br>
             아래 순서대로 진행하세요.
           </div>
           <div class="snote">⚠️ <strong>"Google이 확인하지 않은 앱"</strong> 경고는 정상입니다.<br>본인 드라이브에만 접근하며 외부로 데이터를 전송하지 않습니다.</div>
         </div>
-        <div class="am">
-          <div class="am-top">
-            <div class="am-ico">⚠️</div>
-            <div>
-              <div class="am-ttl">승인이 필요합니다</div>
-              <div class="am-sub">이 프로젝트를 실행하려면 권한이 필요합니다</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+
+          <!-- 단계 1: 승인 필요 팝업 -->
+          <div class="am" style="border-radius:10px;overflow:hidden;box-shadow:var(--sh-md);background:white;border:1px solid var(--g200);">
+            <div style="background:#f8f9fa;border-bottom:1px solid var(--g200);padding:8px 16px;font-size:11px;font-weight:700;color:var(--g700);">
+              ① 메뉴 클릭 → 승인 팝업
+            </div>
+            <div style="padding:14px 16px;">
+              <div style="font-size:13px;font-weight:700;margin-bottom:6px;">승인 필요</div>
+              <div style="font-size:12px;color:var(--g700);margin-bottom:12px;">이 문서에 첨부된 스크립트를 실행하려면 사용자의 허가가 필요합니다.</div>
+              <div style="display:flex;justify-content:flex-end;gap:8px;">
+                <button class="db s" style="font-size:12px;padding:6px 14px;">취소</button>
+                <button class="db p" style="font-size:12px;padding:6px 14px;">확인 ◀ 클릭</button>
+              </div>
             </div>
           </div>
-          <div class="am-body">이 앱은 Google에서 확인하지 않았습니다. 개인이 제작한 스크립트로 본인의 Google Drive에만 접근합니다.</div>
-          <div class="am-steps">
-            <div class="am-step"><div class="num">1</div><span>[권한 검토] 클릭</span></div>
-            <div class="am-step"><div class="num">2</div><span>Google 계정 선택</span></div>
-            <div class="am-step"><div class="num">3</div><span>[고급] 클릭</span></div>
-            <div class="am-step"><div class="num">4</div><span style="color:var(--green);font-weight:600;">[안전하지 않은 페이지로 이동] 클릭</span></div>
-            <div class="am-step"><div class="num">5</div><span style="color:var(--green);font-weight:600;">[허용] 클릭 → 완료!</span></div>
+
+          <!-- 단계 2: Google 확인하지 않은 앱 -->
+          <div class="am">
+            <div style="background:#f8f9fa;border-bottom:1px solid var(--g200);padding:8px 16px;font-size:11px;font-weight:700;color:var(--g700);">
+              ② "Google에서 확인하지 않은 앱" 화면
+            </div>
+            <div class="am-top">
+              <div class="am-ico">⚠️</div>
+              <div>
+                <div class="am-ttl">Google에서 확인하지 않은 앱</div>
+                <div class="am-sub">개발자의 앱이 Google에서 인증을 받기 전에는 앱을 사용하지 마세요.</div>
+              </div>
+            </div>
+            <div class="am-steps" style="padding:0 20px 14px;">
+              <div class="am-step"><div class="num">1</div><span style="color:var(--green);font-weight:600;">[고급] 클릭</span></div>
+              <div class="am-step"><div class="num">2</div><span style="color:var(--green);font-weight:600;">[월중계획&amp;주간계획(으)로 이동(안전하지 않음)] 클릭</span></div>
+            </div>
           </div>
-          <div class="dlg-btns" style="border-top:1px solid var(--g200);">
-            <button class="db s">취소</button>
-            <button class="db g">권한 검토</button>
+
+          <!-- 단계 3: 모두 선택 + 계속 -->
+          <div class="am">
+            <div style="background:#f8f9fa;border-bottom:1px solid var(--g200);padding:8px 16px;font-size:11px;font-weight:700;color:var(--g700);">
+              ③ 권한 허용 화면
+            </div>
+            <div style="padding:14px 16px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                <input type="checkbox" checked style="width:14px;height:14px;accent-color:var(--blue);">
+                <span style="font-size:12px;font-weight:700;color:var(--g900);">모두 선택 ◀ 체크</span>
+              </div>
+              <div style="font-size:11px;color:var(--g700);padding-left:22px;line-height:1.7;margin-bottom:12px;">
+                · 모든 Google Sheets 스프레드시트 확인, 수정, 생성, 삭제<br>
+                · 외부 서비스에 연결
+              </div>
+              <div style="display:flex;justify-content:flex-end;">
+                <button class="db p" style="font-size:12px;padding:6px 20px;">계속 ◀ 클릭</button>
+              </div>
+            </div>
           </div>
+
+          <!-- 완료 안내 -->
+          <div style="background:var(--green-lt);border:1px solid #a8d5b5;border-radius:8px;padding:10px 14px;font-size:12px;color:var(--green);font-weight:600;text-align:center;">
+            ✅ 완료! 이제 상단 메뉴 [📅 월중계획&amp;주간계획]이 표시됩니다
+          </div>
+
         </div>
       </div>
 
@@ -369,6 +415,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
           <div class="snb"><div class="sn">4</div><span class="sl">STEP 4</span></div>
           <div class="stitle">초기 설정 입력 후<br>바로 시작!</div>
           <div class="sdesc">
+            허용 완료 후 상단에 <strong>[📅 월중계획&amp;주간계획]</strong> 메뉴가 나타납니다.<br><br>
             메뉴에서 <strong>[⚙️ 초기 설정]</strong>을 클릭해 학교명, 학년도, 공휴일, 방학 일정, 확인자를 입력합니다.<br><br>
             <strong>[💾 저장]</strong>을 누르면 모든 준비가 완료됩니다.<br><br>
             이제 <strong>[📋 월중계획 양식 생성]</strong>으로 바로 시작하세요!
@@ -405,8 +452,8 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
     <div style="font-size:48px;margin-bottom:16px;">📋</div>
     <h2>지금 바로 시작하세요</h2>
     <p>링크를 열어 사본을 저장하면 즉시 사용할 수 있습니다</p>
-    <a href="YOUR_GOOGLE_SHEETS_SHARE_LINK" target="_blank" class="btn-wh">📋 내 드라이브에 가져가기</a>
-    <p class="cta-note">* Google 계정 로그인 후 [파일] → [사본 만들기]로 저장하세요</p>
+    <a href="https://docs.google.com/spreadsheets/d/1Dyy1KDVjw425l6eFsmR_jiGSIMy-njx-Y10q9GvPe5w/edit?gid=0#gid=0" target="_blank" class="btn-wh">📋 내 드라이브에 가져가기</a>
+    <p class="cta-note">* [파일] → [사본 만들기]로 저장하면 메뉴와 스크립트가 함께 복사됩니다</p>
   </div>
 </section>
 
@@ -419,6 +466,14 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
       <div class="fq-item">
         <div class="fq-q" onclick="faq(this)"><span>무료인가요?</span><span class="arr">▽</span></div>
         <div class="fq-a">완전 무료입니다. Google 계정만 있으면 Google Sheets와 Apps Script 모두 무료로 사용 가능합니다.</div>
+      </div>
+      <div class="fq-item">
+        <div class="fq-q" onclick="faq(this)"><span>사본을 만들었는데 [📅 월중계획&amp;주간계획] 메뉴가 안 보입니다.</span><span class="arr">▽</span></div>
+        <div class="fq-a">
+          <strong>편집자 권한</strong>으로 공유된 링크에서 사본을 만들어야 메뉴(스크립트)가 함께 복사됩니다.<br><br>
+          뷰어 권한 링크에서 사본을 만들면 시트 데이터만 복사되고 스크립트는 포함되지 않습니다.<br><br>
+          해결 방법: 이 페이지의 [문서 받기] 버튼 → [파일] → [사본 만들기] 순서로 다시 시도해 주세요.
+        </div>
       </div>
       <div class="fq-item">
         <div class="fq-q" onclick="faq(this)"><span>사본 저장 후 원본 문서와 연결이 되나요?</span><span class="arr">▽</span></div>
