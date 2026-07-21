@@ -76,7 +76,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
 .sr2{color:#cc0000;font-weight:600;font-size:9px;padding:4px 3px!important;}
 
 /* 장점 카드 */
-.bg{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;}
+.bg{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px;}
 .bc{background:white;border:1px solid var(--g200);border-radius:var(--r);padding:28px 24px;box-shadow:var(--sh-sm);transition:all .25s;position:relative;overflow:hidden;}
 .bc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--green);transform:scaleX(0);transition:transform .3s;transform-origin:left;}
 .bc:hover{box-shadow:var(--sh-md);transform:translateY(-3px);}
@@ -253,6 +253,12 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
         <div class="bd">주간계획 양식을 생성하면 월중계획에 입력한 내용(작은학교·업무)이 해당 날짜에 자동으로 들어갑니다. 같은 내용을 두 번 입력하지 않아도 됩니다.</div>
         <span class="btag">이중 입력 완전 제거</span>
       </div>
+      <div class="bc">
+        <div class="bi g">📌</div>
+        <div class="bt">매월 반복 행사 자동 입력</div>
+        <div class="bd">청렴·갑질 자가진단의 날(매월 1일), 안전점검의 날(매월 4일), 청렴 Day(셋째 주 수요일) 등을 한 번 설정하면 월중계획 생성 시 자동으로 반영됩니다. 쉬는 날이면 다음 평일로 자동 순연됩니다.</div>
+        <span class="btag">반복 입력 제로</span>
+      </div>
     </div>
   </div>
 </section>
@@ -271,8 +277,19 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
         <div>
           <div class="snb"><div class="sn">1</div><span class="sl">STEP 1</span></div>
           <div class="stitle">공유 링크를 열고<br>사본 저장하기</div>
+          <!-- 구글 로그인 필수 안내 -->
+          <div style="background:#fce8e6;border:1.5px solid #f5c2be;border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px;">
+            <span style="font-size:20px;flex-shrink:0;">🔑</span>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#c5221f;margin-bottom:4px;">Chrome 브라우저에 Google 로그인 필수!</div>
+              <div style="font-size:12px;color:#c5221f;line-height:1.6;">
+                사본 만들기를 하려면 <strong>Chrome 브라우저에 Google 계정으로 로그인</strong>되어 있어야 합니다.<br>
+                로그인 안 된 상태에서는 [파일] → [사본 만들기] 메뉴가 보이지 않습니다.
+              </div>
+            </div>
+          </div>
           <div class="sdesc">
-            아래 <a href="#share" style="color:var(--green);font-weight:700;">[문서 받기]</a> 버튼을 클릭하면 공유 문서가 열립니다.<br><br>
+            위 준비가 되었으면 아래 <a href="#share" style="color:var(--green);font-weight:700;">[문서 받기]</a> 버튼을 클릭해 공유 문서를 여세요.<br><br>
             상단 메뉴에서 <strong>[파일]</strong> → <strong>[사본 만들기]</strong>를 클릭하면<br>
             시트와 함께 <strong>스크립트(메뉴)도 함께</strong> 내 드라이브에 복사됩니다.<br><br>
             이후 내 복사본에서 독립적으로 작업하면 됩니다.
@@ -453,7 +470,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
     <h2>지금 바로 시작하세요</h2>
     <p>링크를 열어 사본을 저장하면 즉시 사용할 수 있습니다</p>
     <a href="https://docs.google.com/spreadsheets/d/1Dyy1KDVjw425l6eFsmR_jiGSIMy-njx-Y10q9GvPe5w/edit?gid=0#gid=0" target="_blank" class="btn-wh">📋 내 드라이브에 가져가기</a>
-    <p class="cta-note">* [파일] → [사본 만들기]로 저장하면 메뉴와 스크립트가 함께 복사됩니다</p>
+    <p class="cta-note">* Chrome 브라우저에 Google 계정 로그인 후 [파일] → [사본 만들기]로 저장하세요</p>
   </div>
 </section>
 
