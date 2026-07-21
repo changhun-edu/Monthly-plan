@@ -216,7 +216,9 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
       <a href="#share" class="btn-main">📋 내 드라이브에 가져가기</a>
       <p class="hero-sub">* Google 계정이 있으면 무료로 사용 가능합니다</p>
     </div>
-    <div class="hcard">
+    <div>
+      <div style="font-size:11px;font-weight:700;color:var(--g500);margin-bottom:8px;text-align:center;letter-spacing:.05em;">▼ 자동 생성된 월중계획 예시</div>
+      <div class="hcard">
       <div class="cbar">
         <div class="cd" style="background:#ff5f57"></div>
         <div class="cd" style="background:#febc2e"></div>
@@ -231,6 +233,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
       <div class="sr" style="background:#fff2cc;"><div style="grid-column:1/-1;text-align:center;color:#cc0000;font-weight:700;font-size:9px;padding:5px;">☀️ 여름방학 2026-07-25 ~ 2026-08-20</div></div>
       <div class="sr"><div class="sc" style="font-size:9px;color:#555">8월</div><div></div><div></div><div></div><div></div></div>
       <div class="sr"><div class="sc">21</div><div style="text-align:center">금</div><div class="sx">*개학식 *2학기 시작</div><div class="sr2">*전교직원 회의</div><div></div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -240,7 +243,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
   <div class="wrap">
     <div class="eyebrow">주요 기능</div>
     <h2 class="sec-title">네 가지가 달라집니다</h2>
-    <p class="sec-desc">반복 작업을 자동화해서 선생님이 수업에 집중할 수 있도록 만들었습니다.</p>
+    <p class="sec-desc">아래 네 가지 기능이 이 시스템의 핵심입니다.</p>
     <div class="bg">
       <div class="bc">
         <div class="bi g">📋</div>
@@ -257,7 +260,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
       <div class="bc">
         <div class="bi o">🔄</div>
         <div class="bt">월중계획 → 주간계획 자동 복사</div>
-        <div class="bd">주간계획 양식을 생성하면 월중계획에 입력한 내용(작은학교·업무)이 해당 날짜에 자동으로 들어갑니다. 같은 내용을 두 번 입력하지 않아도 됩니다.</div>
+        <div class="bd">주간계획 양식을 생성하면 월중계획에 입력한 내용(교육활동·업무)이 해당 날짜에 자동으로 들어갑니다. 같은 내용을 두 번 입력하지 않아도 됩니다.</div>
         <span class="btag">이중 입력 완전 제거</span>
       </div>
       <div class="bc">
@@ -296,7 +299,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
             </div>
           </div>
           <div class="sdesc">
-            위 준비가 되었으면 이 페이지 하단의 <a href="#share" style="color:var(--green);font-weight:700;">[📋 가져가기]</a> 버튼을 클릭해 공유 문서를 여세요.<br><br>
+            위 준비가 되었으면 아래 초록색 <strong>[📋 내 드라이브에 가져가기]</strong> 버튼을 클릭해 공유 문서를 여세요.<br><br>
             공유 문서가 열리면 <strong>STEP 2</strong>로 넘어가세요.
           </div>
           <div class="snote">
@@ -358,7 +361,11 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
             사본을 만들면 시트와 자동화 기능이 함께 내 드라이브에 복사되어 독립적으로 운영됩니다.
           </div>
         </div>
-        <div class="dlg">
+        <div>
+          <div style="font-size:12px;color:var(--g700);margin-bottom:10px;background:var(--blue-lt);border-radius:8px;padding:8px 12px;">
+            📌 상단 메뉴 <strong>[파일]</strong> → <strong>[사본 만들기]</strong> 클릭 후 아래 창이 뜹니다
+          </div>
+          <div class="dlg">
           <div class="dlg-t">사본 만들기</div>
           <div class="dlg-b">
             <div class="dlg-f" style="margin-bottom:14px;">
@@ -374,6 +381,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
             <button class="db s">취소</button>
             <button class="db p">확인 ◀ 클릭!</button>
           </div>
+        </div>
         </div>
       </div>
 
@@ -432,8 +440,8 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
             </div>
             <div style="padding:14px 16px;">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-                <input type="checkbox" checked style="width:14px;height:14px;accent-color:var(--blue);">
-                <span style="font-size:12px;font-weight:700;color:var(--g900);">모두 선택 ◀ 체크</span>
+                <input type="checkbox" style="width:14px;height:14px;accent-color:var(--blue);">
+                <span style="font-size:12px;font-weight:700;color:var(--g900);">모두 선택 ◀ 체크하세요!</span>
               </div>
               <div style="font-size:11px;color:var(--g700);padding-left:22px;line-height:1.7;margin-bottom:12px;">
                 · 모든 Google Sheets 스프레드시트 확인, 수정, 생성, 삭제<br>
@@ -488,9 +496,10 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
             <span style="font-size:11px;color:var(--g700);margin-left:6px;">⚙️ 초기 설정</span>
           </div>
           <div class="set-tab-row">
-            <div class="set-tab act">📋 기본정보</div>
-            <div class="set-tab">📅 달력설정</div>
-            <div class="set-tab">✅ 확인자</div>
+            <div class="set-tab act" style="font-size:11px;">📋 기본정보</div>
+            <div class="set-tab" style="font-size:11px;">📅 달력설정</div>
+            <div class="set-tab" style="font-size:11px;">✅ 확인자</div>
+            <div class="set-tab" style="font-size:11px;">📌 반복행사</div>
           </div>
           <div class="mbody" style="padding:14px 16px;">
             <div class="sf"><label>학교명 *</label><div class="fi2 ok">운남초등학교</div></div>
@@ -508,7 +517,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
 <!-- CTA -->
 <section class="cta-sec" id="share">
   <div class="wrap">
-    <div style="font-size:48px;margin-bottom:16px;">📋</div>
+    <div style="font-size:48px;margin-bottom:16px;">🏫</div>
     <h2>지금 바로 시작하세요</h2>
     <p>사본을 저장하고 한 번만 허용하면 바로 사용할 수 있습니다</p>
     <a href="https://docs.google.com/spreadsheets/d/1Dyy1KDVjw425l6eFsmR_jiGSIMy-njx-Y10q9GvPe5w/edit?gid=0#gid=0" target="_blank" class="btn-wh">📋 내 드라이브에 가져가기</a>
@@ -566,11 +575,11 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--g900);background:#fff;lin
       </div>
       <div class="fq-item">
         <div class="fq-q" onclick="faq(this)"><span>월중계획을 먼저 입력해야 주간계획이 자동으로 채워지나요?</span><span class="arr">▽</span></div>
-        <div class="fq-a">네. 월중계획 시트의 작은학교·업무 칸에 내용을 입력한 후 주간계획 양식을 생성하면 해당 날짜 내용이 자동으로 복사됩니다. 월중계획을 먼저 작성하는 것이 기본 흐름입니다.</div>
+        <div class="fq-a">네. 월중계획 시트의 교육활동·업무 칸에 내용을 입력한 후 주간계획 양식을 생성하면 해당 날짜 내용이 자동으로 복사됩니다. 월중계획을 먼저 작성하는 것이 기본 흐름입니다.</div>
       </div>
       <div class="fq-item">
         <div class="fq-q" onclick="faq(this)"><span>공휴일 자동 조회가 안 될 때는 어떻게 하나요?</span><span class="arr">▽</span></div>
-        <div class="fq-a">학교 Google Workspace 계정에서 외부 접근이 차단된 경우 자동 조회가 안 될 수 있습니다. 초기 설정의 공휴일 입력란에 직접 입력하세요.<br>입력 형식: 3/1, 5/5, 6/6, 8/15, 10/3, 10/9, 12/25</div>
+        <div class="fq-a">학교 전용 Google 계정(교육청 계정 등)에서 외부 접근이 차단된 경우 자동 조회가 안 될 수 있습니다. 초기 설정의 공휴일 입력란에 직접 입력하세요.<br>입력 형식: 3/1, 5/5, 6/6, 8/15, 10/3, 10/9, 12/25</div>
       </div>
     </div>
   </div>
